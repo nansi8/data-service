@@ -4,14 +4,26 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", index)
-	r.HandleFunc("/hello", HelloHandler)
+	r.HandleFunc("/data-nodes", DataNodesHandler)
+	r.HandleFunc("/checksum-nodes", ChecksumNodesHandler)
 
 	http.ListenAndServe(":80", r)
+}
+
+func DataNodesHandler(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write([]byte(strconv.Itoa(Config().dataNodes)))
+}
+
+func ChecksumNodesHandler(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write([]byte(strconv.Itoa(Config().checksumNodes)))
 }
 
 func index(w http.ResponseWriter, req *http.Request) {
@@ -22,9 +34,4 @@ func index(w http.ResponseWriter, req *http.Request) {
 	} else {
 		w.Write([]byte("Test\n"))
 	}
-}
-
-func HelloHandler(w http.ResponseWriter, req *http.Request) {
-	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("This is an example server.\n"))
 }
