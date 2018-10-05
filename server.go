@@ -8,7 +8,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/data-service/", health)
+	r.HandleFunc("/", health)
 	r.HandleFunc("/data-service/data-nodes", DataNodesHandler)
 	r.HandleFunc("/data-service/checksum-nodes", ChecksumNodesHandler)
 
