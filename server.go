@@ -8,12 +8,13 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/data-service/health", health)
+	r.HandleFunc("/", health)
 	r.HandleFunc("/data-service/data-nodes", DataNodesHandler)
 	r.HandleFunc("/data-service/checksum-nodes", ChecksumNodesHandler)
 
 	http.ListenAndServe(":80", r)
 }
+
 func health(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
