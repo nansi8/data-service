@@ -9,6 +9,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/data-service/health", health)
+	r.HandleFunc("/data-service/test", test)
 	r.HandleFunc("/data-service/data-nodes", DataNodesHandler)
 	r.HandleFunc("/data-service/checksum-nodes", ChecksumNodesHandler)
 
@@ -17,6 +18,11 @@ func main() {
 
 func health(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
+}
+
+func test(w http.ResponseWriter, req *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Nansi8 test"))
 }
 
 func DataNodesHandler(w http.ResponseWriter, req *http.Request) {
