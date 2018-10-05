@@ -2,19 +2,21 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"log"
 	"net/http"
 	"strconv"
 )
 
 func main() {
 	r := mux.NewRouter()
+	r.HandleFunc("/", index)
 	r.HandleFunc("/health", health)
-	r.HandleFunc("/data-service", index)
 	r.HandleFunc("/data-service/data-nodes", DataNodesHandler)
 	r.HandleFunc("/data-service/checksum-nodes", ChecksumNodesHandler)
 
 	http.ListenAndServe(":80", r)
+}
+func health(w http.ResponseWriter, req *http.Request) {
+	w.WriteHeader(http.StatusOK)
 }
 
 func DataNodesHandler(w http.ResponseWriter, req *http.Request) {
@@ -27,16 +29,6 @@ func ChecksumNodesHandler(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte(strconv.Itoa(Config().checksumNodes)))
 }
 
-func health(w http.ResponseWriter, req *http.Request) {
-	w.WriteHeader(http.StatusOK)
-}
-
 func index(w http.ResponseWriter, req *http.Request) {
-	// all calls to unknown url paths should return 404
-	if req.URL.Path != "/" {
-		log.Printf("404: %s", req.URL.String())
-		http.NotFound(w, req)
-	} else {
-		w.Write([]byte("Test\n"))
-	}
+	w.WriteHeader(http.StatusOK)
 }
