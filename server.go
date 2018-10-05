@@ -8,8 +8,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", index)
-	r.HandleFunc("/health", health)
+	r.HandleFunc("/data-service/health", health)
 	r.HandleFunc("/data-service/data-nodes", DataNodesHandler)
 	r.HandleFunc("/data-service/checksum-nodes", ChecksumNodesHandler)
 
@@ -27,8 +26,4 @@ func DataNodesHandler(w http.ResponseWriter, req *http.Request) {
 func ChecksumNodesHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte(strconv.Itoa(Config().checksumNodes)))
-}
-
-func index(w http.ResponseWriter, req *http.Request) {
-	w.WriteHeader(http.StatusOK)
 }
