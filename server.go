@@ -9,9 +9,9 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", index)
-	r.HandleFunc("/data-nodes", DataNodesHandler)
-	r.HandleFunc("/checksum-nodes", ChecksumNodesHandler)
+	r.HandleFunc("/data-service", index)
+	r.HandleFunc("/data-service/data-nodes", DataNodesHandler)
+	r.HandleFunc("/data-service/checksum-nodes", ChecksumNodesHandler)
 
 	http.ListenAndServe(":80", r)
 }
